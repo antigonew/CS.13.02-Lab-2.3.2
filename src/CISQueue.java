@@ -1,26 +1,56 @@
 import java.util.Arrays;
 
 public class CISQueue {
+    private Integer[] queue;
+    private int size;
+    private int front;
+    private int rear;
 
-    // Array property.
-    
-    // Size property.
-    
-    // Index pointer. Indicates the index of the most recently added element.
+    public CISQueue(int capacity) {
+        queue = new Integer[capacity];
+        size = 0;
+        front = 0;
+        rear = -1;
+    }
 
-    // Constructor.
+    public void enqueue(Integer data) {
+        if (isFull()) {
+            throw new IllegalStateException("Queue is full");
+        }
+        rear = (rear + 1) % queue.length;
+        queue[rear] = data;
+        size++;
+    }
 
-    // Enqueue. This method adds a node to the end of the linked list.
+    public Integer dequeue() {
+        if (isEmpty()) {
+            return null;
+        }
+        Integer data = queue[front];
+        front = (front + 1) % queue.length;
+        size--;
+        return data;
+    }
 
-    // Dequeue. This method removes a node from the beginning of the linked list.
+    public boolean isEmpty() {
+        return size == 0;
+    }
 
-    // isEmpty. Returns a boolean indicating whether the linked list is empty.
+    public boolean isFull() {
+        return size == queue.length;
+    }
 
-    // size. Returns the size of the queue.
+    public int size() {
+        return size;
+    }
 
-    // reshuffle. Moves each element down one index. Called whenever we dequeue.
-
-    // toString. Returns a description of the queue in, for example, the following format:
-    // CISQueue{queue=[7, 11], size=2, pointer=1}
-
+    @Override
+    public String toString() {
+        return "CISQueue{" +
+                "queue=" + Arrays.toString(queue) +
+                ", size=" + size +
+                ", front=" + front +
+                ", rear=" + rear +
+                '}';
+    }
 }
